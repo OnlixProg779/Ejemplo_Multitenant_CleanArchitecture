@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Multitenant.Application.Contracts.Repository.Generic;
 using Multitenant.Application.Contracts.Specification;
-using Multitenant.Application.Helpers;
+using Multitenant.Application.CQRS.Commands.Products.ChangeActivators.Resources;
+using Multitenant.Application.Specification;
 using Multitenant.Domain.Common;
-using Multitenant.Infraestructure.Specification;
 using System.Linq.Expressions;
 
 namespace Multitenant.Infraestructure.Repository.Generic
@@ -17,6 +17,20 @@ namespace Multitenant.Infraestructure.Repository.Generic
             _context = context ??
            throw new ArgumentNullException(nameof(context));
         }
+
+        public async Task<ProductChangeActivatorsResponse> ChangeActive(T entity, bool? command)
+        {
+            List<string> responseMessage = new List<string>();
+                    entity.Active = command;
+                    UpdateEntity(entity);
+            return new ProductChangeActivatorsResponse
+            {
+                ResponseChange = 1,
+                NewValue = entity.Active,
+                ResponseMessage = responseMessage
+            };
+        }
+
 
         public void AddEntity(T entity)
         {
@@ -42,7 +56,7 @@ namespace Multitenant.Infraestructure.Repository.Generic
 
 
             query = query.Where(a => a.Id == id);
-            if (includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));// para agregar nuevas entidades al query
+            if (includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));
 
             return await query.FirstOrDefaultAsync();
         }
@@ -70,28 +84,6 @@ namespace Multitenant.Infraestructure.Repository.Generic
             }
         }
 
-        public async Task<int> Complete(MyTokenInformation token)
-        {
-            if (token != null)
-            {
-
-                foreach (var entry in _context.ChangeTracker.Entries<BaseEntities>())
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            entry.Entity.CreatedBy = token.Email;
-                            //entry.Entity.IdUuarui = token.Usuario;
-                            break;
-                        case EntityState.Modified:
-                            entry.Entity.LastModifiedBy = token.Email;
-                            break;
-                    }
-                }
-                return await _context.SaveChangesAsync();
-
-            }
-            else return 0;
-        }
+       
     }
 }

@@ -5,10 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Multitenant.Application.Constants;
+using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.Contracts.Repository.Generic;
+using Multitenant.Application.Contracts.Services;
 using Multitenant.Application.Models;
 using Multitenant.Infraestructure.Persistence;
+using Multitenant.Infraestructure.Repository;
 using Multitenant.Infraestructure.Repository.Generic;
+using Multitenant.Infraestructure.Services;
 using System.Text;
 
 namespace Multitenant.Infraestructure
@@ -46,14 +50,12 @@ namespace Multitenant.Infraestructure
 
         public static IServiceCollection ConfigureBussinesServices(this IServiceCollection services, IConfiguration configuration)
         {
-
-            services.AddDbContext<BussinesDbContext>(options =>
+            services.AddDbContext<BusinessDbContext>(options =>
                options.UseNpgsql(configuration.GetConnectionString("Bussines"),
-               b => b.MigrationsAssembly(typeof(BussinesDbContext).Assembly.FullName)
-               ));
+               b => b.MigrationsAssembly(typeof(BusinessDbContext).Assembly.FullName)
+               ), ServiceLifetime.Scoped);
 
             return services;
-
         }
 
         public static IServiceCollection AddExtendJwtServices(this IServiceCollection services, IConfiguration configuration)
@@ -69,9 +71,9 @@ namespace Multitenant.Infraestructure
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 RequireExpirationTime = false,
-                ClockSkew = TimeSpan.Zero
-                //ValidIssuer = configuration["JwtSettings:Issuer"],
-                //ValidAudience = configuration["JwtSettings:Audience"],
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = configuration["JwtSettings:Issuer"],
+                ValidAudience = configuration["JwtSettings:Audience"],
             };
 
             services.AddSingleton(tokenValidationParameters);
@@ -106,6 +108,10 @@ namespace Multitenant.Infraestructure
         {
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IUnitOfWorkIdentity), typeof(UnitOfWorkIdentity));
+            services.AddScoped(typeof(IUnitOfWorkBusiness), typeof(UnitOfWorkBusiness));
+            services.AddTransient(typeof(ILogginService), typeof(LogginService));
+            services.AddScoped(typeof(IApplyBusinessMigrations), typeof(ApplyBusinessMigrations));
 
             return services;
 

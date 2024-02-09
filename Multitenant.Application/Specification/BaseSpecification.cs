@@ -1,7 +1,7 @@
 ﻿using Multitenant.Application.Contracts.Specification;
 using System.Linq.Expressions;
 
-namespace Multitenant.Infraestructure.Specification
+namespace Multitenant.Application.Specification
 {
     public class BaseSpecification<T> : ISpecification<T>
     {

@@ -2,7 +2,7 @@
 using Multitenant.Application.Contracts.Specification;
 using Multitenant.Domain.Common;
 
-namespace Multitenant.Infraestructure.Specification
+namespace Multitenant.Application.Specification
 {
     public class SpecificationEvaluator<T> where T : BaseEntities
     {

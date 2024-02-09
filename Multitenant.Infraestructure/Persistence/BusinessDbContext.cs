@@ -1,15 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Multitenant.Domain.Bussines;
 using Multitenant.Domain.Common;
 
 namespace Multitenant.Infraestructure.Persistence
 {
-    public class BussinesDbContext : DbContext
+    public class BusinessDbContext : DbContext
     {
         public virtual DbSet<Products>? Products { get; set; }
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BussinesDbContext(DbContextOptions<BussinesDbContext> options) : base(options)
+        public BusinessDbContext(DbContextOptions<BusinessDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
 
         }
 
@@ -32,6 +35,18 @@ namespace Multitenant.Infraestructure.Persistence
                 }
             }
             return base.SaveChangesAsync(cancellationToken);
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                // TODO: Agregar una validacion para comprobar que la organizacoin exista en la parametrizacion de base.
+                var connectionString = _httpContextAccessor.HttpContext?.Items["ConnectionStringLoad"]?.ToString();
+                if (!string.IsNullOrEmpty(connectionString))
+                {
+                    optionsBuilder.UseNpgsql(connectionString);
+                }
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

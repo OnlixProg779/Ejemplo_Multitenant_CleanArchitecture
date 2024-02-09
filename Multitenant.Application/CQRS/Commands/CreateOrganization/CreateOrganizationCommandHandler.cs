@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Multitenant.Application.Contracts.Repository.Generic;
+using Multitenant.Application.Contracts.Repository;
+using Multitenant.Application.Contracts.Services;
 using Multitenant.Application.CQRS.Commands.CreateOrganization.Resources;
 using Multitenant.Application.Helpers;
 using Multitenant.Application.Models;
@@ -14,12 +15,15 @@ namespace Multitenant.Application.CQRS.Commands.CreateOrganization
         private readonly ILogger<CreateOrganizationCommandHandler> _logger; 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly MyRoleService _roles;
-        private readonly IAsyncRepository<Organization> _repositoryOrganization;
-        public CreateOrganizationCommandHandler(ILogger<CreateOrganizationCommandHandler> logger, UserManager<IdentityUser> userManager, MyRoleService roles, IAsyncRepository<Organization> repositoryOrganization)
+        private readonly IUnitOfWorkIdentity _repositoryOrganization;
+        private readonly IApplyBusinessMigrations _applyBussinesMigrations;
+
+        public CreateOrganizationCommandHandler(ILogger<CreateOrganizationCommandHandler> logger, UserManager<IdentityUser> userManager, MyRoleService roles, IUnitOfWorkIdentity repositoryOrganization, IApplyBusinessMigrations applyBussinesMigrations)
         {
             _logger = logger;
             _userManager = userManager;
             _roles = roles;
+            _applyBussinesMigrations = applyBussinesMigrations;
             _repositoryOrganization = repositoryOrganization ??
                  throw new ArgumentNullException(nameof(repositoryOrganization));
         }
@@ -38,7 +42,9 @@ namespace Multitenant.Application.CQRS.Commands.CreateOrganization
                 };
             }
 
-            var user = new IdentityUser { UserName = request.UserName };
+            // TODO: Validar que la organizacion no exista antes de empezar las tareas
+
+            var user = new IdentityUser { UserName = request.UserName, Email = request.UserName, EmailConfirmed = true };
 
             var createUserResult = await _userManager.CreateAsync(user, request.Password);
 
@@ -58,7 +64,7 @@ namespace Multitenant.Application.CQRS.Commands.CreateOrganization
                 OrganizationName = request.OrganizationName,
             };
 
-            _repositoryOrganization.AddEntity(organizationUser);
+            _repositoryOrganization.Repository<Organization>().AddEntity(organizationUser);
             await _repositoryOrganization.Complete(respToken);
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, request.Rol);
@@ -66,6 +72,8 @@ namespace Multitenant.Application.CQRS.Commands.CreateOrganization
             {
                 _logger.LogInformation("Error al asignar rol al usuario: {Errors}", string.Join(", ", addToRoleResult.Errors.Select(e => e.Description)));
             }
+
+            await _applyBussinesMigrations.ApplyMigrations(request.OrganizationName);
 
             return new CreateOrganizationResponse
             {

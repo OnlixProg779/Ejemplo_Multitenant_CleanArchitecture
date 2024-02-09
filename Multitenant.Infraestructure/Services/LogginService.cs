@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Multitenant.Application.Contracts.Repository.Generic;
+using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.Contracts.Services;
 using Multitenant.Application.Models;
 using Multitenant.Application.Models.LoginService;
+using Multitenant.Application.Specification;
 using Multitenant.Domain.Identity;
-using Multitenant.Infraestructure.Specification;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq.Expressions;
 using System.Security.Claims;
@@ -19,13 +19,13 @@ namespace Multitenant.Infraestructure.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
-        private readonly IAsyncRepository<Organization> _repositoryOrganization;
+        private readonly IUnitOfWorkIdentity _repositoryOrganization;
 
         public LogginService(
            UserManager<IdentityUser> userManager,
            SignInManager<IdentityUser> signInManager,
            IOptions<JwtSettings> jwtSettings,
-           IAsyncRepository<Organization> repositoryOrganization
+           IUnitOfWorkIdentity repositoryOrganization
            )
         {
             _userManager = userManager ??
@@ -83,7 +83,7 @@ namespace Multitenant.Infraestructure.Services
             criteria.Add(a => a.IdentityUserId == user!.Id);
             var spec = new BaseSpecification<Organization>(criteria);
 
-            var entityAppUser = await _repositoryOrganization.GetFirstWithSpec(spec);
+            var entityAppUser = await _repositoryOrganization.Repository<Organization>().GetFirstWithSpec(spec);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

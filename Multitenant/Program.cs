@@ -3,6 +3,7 @@ using Multitenant.Application;
 using Microsoft.AspNetCore.Identity;
 using Multitenant.Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Multitenant.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 // Infraestructure
 builder.Services.ConfigureInfraestructureServices(builder.Configuration);
 builder.Services.ConfigureBussinesServices(builder.Configuration);
@@ -23,6 +23,17 @@ builder.Services.AddExtendJwtServices(builder.Configuration);
 builder.Services.AddExtendApplicationServices();
 
 builder.Services.AddRolesServices();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+     .AllowAnyOrigin() 
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+    );
+});
+
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -36,11 +47,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseCors("CorsPolicy");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<TenantMiddleware>();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 using (var scope = app.Services.CreateScope())
 {
@@ -54,7 +76,7 @@ using (var scope = app.Services.CreateScope())
 
         var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
         var RoleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-        await IdentityOrganizationSeedData.SeedAsync(userManager, RoleManager, loggerFactory);
+        await IdentityOrganizationSeedData.SeedAsync(context,userManager, RoleManager, loggerFactory);
     }
     catch (Exception ex)
     {

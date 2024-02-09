@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Multitenant.Application.Contracts.Repository.Generic;
+using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Commands.CreateUser.Resources;
 using Multitenant.Application.Helpers;
 using Multitenant.Application.Models;
@@ -14,8 +14,8 @@ namespace Multitenant.Application.CQRS.Commands.CreateUser
         private readonly ILogger<CreateUserCommandHandler> _logger; 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly MyRoleService _roles;
-        private readonly IAsyncRepository<Organization> _repositoryOrganization;
-        public CreateUserCommandHandler(ILogger<CreateUserCommandHandler> logger, UserManager<IdentityUser> userManager, MyRoleService roles, IAsyncRepository<Organization> repositoryOrganization)
+        private readonly IUnitOfWorkIdentity _repositoryOrganization;
+        public CreateUserCommandHandler(ILogger<CreateUserCommandHandler> logger, UserManager<IdentityUser> userManager, MyRoleService roles, IUnitOfWorkIdentity repositoryOrganization)
         {
             _logger = logger;
             _userManager = userManager;
@@ -47,7 +47,7 @@ namespace Multitenant.Application.CQRS.Commands.CreateUser
                 };
             }
 
-            var user = new IdentityUser { UserName = request.UserName };
+            var user = new IdentityUser { UserName = request.UserName, Email = request.UserName, EmailConfirmed = true };
 
             var createUserResult = await _userManager.CreateAsync(user, request.Password);
 
@@ -67,7 +67,7 @@ namespace Multitenant.Application.CQRS.Commands.CreateUser
                 OrganizationName = request.OrganizationName,
             };
 
-            _repositoryOrganization.AddEntity(organizationUser);
+            _repositoryOrganization.Repository<Organization>().AddEntity(organizationUser);
             await _repositoryOrganization.Complete(respToken);
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, request.Rol);

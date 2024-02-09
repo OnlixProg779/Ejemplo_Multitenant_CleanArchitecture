@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Multitenant.Application.Constants;
+using Multitenant.Domain.Identity;
 
 namespace Multitenant.Infraestructure.Persistence
 {
     public class IdentityOrganizationSeedData
     {
-        public static async Task SeedAsync(UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager, ILoggerFactory loggerFactory)
+        public static async Task SeedAsync(IdentityOrganizationDbContext _context, UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager, ILoggerFactory loggerFactory)
         {
             var logger = loggerFactory.CreateLogger<IdentityOrganizationSeedData>();
 
@@ -25,7 +26,21 @@ namespace Multitenant.Infraestructure.Persistence
                 var result = await _userManager.CreateAsync(user, "fxDxxFhj.!21");
                 logger.LogInformation("Estamos insertando nuevos records al context de identidad");
 
-               
+                if (result.Succeeded)
+                {
+                    var applicationUser = new Organization
+                    {
+                        //Id = new Guid("5c389b4c-3f81-4cab-b7cc-29ff29f01c9e"),
+                        IdentityUserId = user.Id,
+                        OrganizationName = "MyOrganization",
+                    };
+
+                    _context.OrganizationIdentity!.Add(applicationUser);
+                    await _context.SaveChangesAsync();
+
+                    await _userManager.AddToRoleAsync(user, CustomRoles.AdminPro);
+
+                }
             }
         }
 
