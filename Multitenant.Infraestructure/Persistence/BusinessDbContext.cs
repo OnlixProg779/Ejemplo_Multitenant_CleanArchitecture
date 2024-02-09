@@ -38,7 +38,8 @@ namespace Multitenant.Infraestructure.Persistence
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            
+          try
             {
                 // TODO: Agregar una validacion para comprobar que la organizacoin exista en la parametrizacion de base.
                 var connectionString = _httpContextAccessor.HttpContext?.Items["ConnectionStringLoad"]?.ToString();
@@ -47,6 +48,11 @@ namespace Multitenant.Infraestructure.Persistence
                     optionsBuilder.UseNpgsql(connectionString);
                 }
             }
+            catch (System.NullReferenceException)
+            {
+                // Es script
+            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

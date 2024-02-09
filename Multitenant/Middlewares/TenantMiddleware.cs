@@ -1,7 +1,9 @@
-﻿using Multitenant.Application.Exceptions;
+﻿using MediatR;
+using Multitenant.Application.CQRS.Commands.CreateUser.Resources;
+using Multitenant.Application.Exceptions;
+using Multitenant.Application.Helpers;
 using Multitenant.Helpers;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 
 namespace Multitenant.Middlewares
 {
@@ -20,22 +22,35 @@ namespace Multitenant.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            var pathSegments = context.Request.Path.Value.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (pathSegments.Length > 0)
-            {
-                var organizationName = pathSegments[^1]; 
-
-                var templateConnectionString = _configuration.GetConnectionString("Bussines");
-                if (templateConnectionString.Contains("[_OrganizationName_]"))
-                {
-                    var connectionString = templateConnectionString.Replace("[_OrganizationName_]", organizationName);
-                    context.Items["ConnectionStringLoad"] = connectionString;
-                }
-            }
-
             try
             {
+                var pathSegments = context.Request.Path.Value.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                string organizationName = string.Empty;
+
+                int companyIndex = Array.IndexOf(pathSegments, "company");
+                if (companyIndex != -1 && pathSegments.Length > companyIndex + 1)
+                {
+                    organizationName = pathSegments[companyIndex + 1];
+                }
+
+                if (!string.IsNullOrEmpty(organizationName))
+                {
+                    var token = context.Request.Headers["Authorization"].ToString();
+                    var respToken = new MyTokenInformation(token);
+                    if (organizationName != respToken.OrganizationName)
+                    {
+                        _logger.LogInformation("No pertenece a la organización: {OrganizationName}", organizationName);
+                        throw new Exception("El usuario no pertenece a la organización");
+                    }
+
+                    var templateConnectionString = _configuration.GetConnectionString("Bussines");
+                    if (templateConnectionString.Contains("[_OrganizationName_]"))
+                    {
+                        var connectionString = templateConnectionString.Replace("[_OrganizationName_]", organizationName);
+                        context.Items["ConnectionStringLoad"] = connectionString;
+                    }
+                }
+
                 await _next(context);
             }
             catch (Exception ex)

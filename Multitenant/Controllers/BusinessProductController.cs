@@ -26,8 +26,8 @@ namespace Multitenant.Controllers
                 throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpPost(Name = "CreateProduct")]
-        [HttpHead]
+        [HttpPost("CreateProduct/company/{organization}", Name = "CreateProduct")]
+        [HttpHead("CreateProduct/company/{organization}")]
         [Consumes(
            "application/json")]
         [Authorize(Policy = "UserOrganization")]
@@ -51,7 +51,8 @@ namespace Multitenant.Controllers
         [Produces(
         "application/json")]
         [ProducesResponseType(typeof(ProductVm), (int)HttpStatusCode.OK)]
-        [HttpGet("{id}", Name = "GetProduct")]
+        [HttpGet("GetProduct/{id}/company/{organization}", Name = "GetProduct")]
+        [HttpHead("GetProduct/{id}/company/{organization}")]
         [Authorize(Policy = "UserOrganization")]
         public async Task<ActionResult<ProductVm>> GetProduct(Guid id,
         [FromHeader(Name = "Authorization")] string? mediaTypeAuthorization)
@@ -64,8 +65,8 @@ namespace Multitenant.Controllers
 
         }
 
-        [HttpPut("{id}/activator", Name = "ChangeActivatorProduct")]
-        [HttpHead("{id}/activator")]
+        [HttpPut("{id}/activator/company/{organization}", Name = "ChangeActivatorProduct")]
+        [HttpHead("{id}/activator/company/{organization}")]
         [Consumes(
            "application/json")]
         [Authorize(Policy = "UserOrganization")]
@@ -89,8 +90,8 @@ namespace Multitenant.Controllers
 
         }
 
-        [HttpPut("{id}/patchProduct", Name = "PatchProduct")]
-        [HttpHead("{id}/patchProduct")]
+        [HttpPut("{id}/patchProduct/company/{organization}", Name = "PatchProduct")]
+        [HttpHead("{id}/patchProduct/company/{organization}")]
         [Consumes(
            "application/json")]
         [Authorize(Policy = "UserOrganization")]
@@ -125,15 +126,14 @@ namespace Multitenant.Controllers
 
         }
 
-        [HttpGet("pagination", Name = "GetProducts")]
-        [HttpHead("pagination")]
+        [HttpGet("pagination/company/{organization}", Name = "GetProducts")]
+        [HttpHead("pagination/company/{organization}")]
         [Produces(
            "application/json")]
         [Authorize(Policy = "UserOrganization")]
         [ProducesResponseType(typeof(PaginationVm<ProductVm>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<PaginationVm<ProductVm>>> GetPaginationAgencies(
            [FromQuery] GetProductPaginParamsQuery entityWParams,
-           [FromHeader(Name = "Accept")] string mediaType,
            [FromHeader(Name = "Authorization")] string? mediaTypeAuthorization
           )
         {
@@ -150,6 +150,11 @@ namespace Multitenant.Controllers
             return Ok(paginationResponse);
         }
 
-
+        [HttpOptions]
+        public IActionResult GetControllerOptions()
+        {
+            Response.Headers.Add("Allow", "GET,OPTIONS,POST,PATCH,HEAD");
+            return Ok();
+        }
     }
 }

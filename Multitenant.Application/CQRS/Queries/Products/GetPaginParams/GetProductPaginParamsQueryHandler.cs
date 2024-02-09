@@ -3,7 +3,6 @@ using MediatR;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Queries.Products.GetPaginParams.Resources;
 using Multitenant.Application.CQRS.Queries.Products.Vms;
-using Multitenant.Application.Helpers;
 
 namespace Multitenant.Application.CQRS.Queries.Products.GetPaginParams
 {

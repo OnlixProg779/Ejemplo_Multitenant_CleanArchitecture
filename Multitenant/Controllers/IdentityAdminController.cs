@@ -58,12 +58,12 @@ namespace Multitenant.Controllers
             return VMresponse;
         }
 
-        [HttpPost("CreateUser/{organizacion}")]
-        [HttpHead("CreateUser/{organizacion}")]
+        [HttpPost("CreateUser/company/{organization}")]
+        [HttpHead("CreateUser/company/{organization}")]
         [Consumes(//Content-Type
         "application/json")]
         [Authorize (Policy = "Organization")]
-        public async Task<ActionResult<CreateUserResponse>> CreateUser([FromBody] CreateUserRequest request,string organizacion,
+        public async Task<ActionResult<CreateUserResponse>> CreateUser([FromBody] CreateUserRequest request,string organization,
         [FromHeader(Name = "Authorization")] string? mediaTypeAuthorization)
         {
 
@@ -73,7 +73,7 @@ namespace Multitenant.Controllers
                 Password = request.Password,
                 Rol = CustomRoles.OrganizacionUsuario,
                 Token = mediaTypeAuthorization,
-                OrganizationName = organizacion
+                OrganizationName = organization
             };
 
             var VMresponse = await _mediator.Send(command);

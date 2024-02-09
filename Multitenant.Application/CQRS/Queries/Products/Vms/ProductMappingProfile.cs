@@ -10,6 +10,7 @@ namespace Multitenant.Application.CQRS.Queries.Products.Vms
         public ProductMappingProfile() {
 
             CreateMap<CreateProductCommand, Domain.Bussines.Products>();
+            CreateMap<Domain.Bussines.Products, ProductPropertyPatch>();
             CreateMap<Domain.Bussines.Products, CreateProductResponse>();
             CreateMap<Domain.Bussines.Products, PatchProductResponse>();
             CreateMap<Domain.Bussines.Products, ProductVm>();
