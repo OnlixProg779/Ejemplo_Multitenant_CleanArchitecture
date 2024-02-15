@@ -1,8 +1,5 @@
-﻿
-using Moq;
+﻿using Moq;
 using Multitenant.Application.Contracts.Repository;
-using Multitenant.Domain.Bussines;
-using System.Linq.Expressions;
 
 namespace Multitenant.Application.Test.Mocks
 {
@@ -11,7 +8,7 @@ namespace Multitenant.Application.Test.Mocks
         public static Mock<IUnitOfWorkBusiness> GetUnitOfWorkBusiness()
         {
             var mockUnitOfWorkBusiness = new Mock<IUnitOfWorkBusiness>();
-            var mockProductoRepository = MockProductoRepository.GetProductByIdRepository(Guid.NewGuid(), It.IsAny<List<Expression<Func<Products, object>>>>());
+            var mockProductoRepository = MockProductoRepository.GetProductByIdRepository();
 
             mockUnitOfWorkBusiness.Setup(r => r.ProductRepository).Returns(mockProductoRepository.Object);
 
