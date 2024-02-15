@@ -147,7 +147,15 @@ namespace Multitenant.Controllers
                 return NotFound(paginationResponse.ResponseMessages);
             }
 
-            return Ok(paginationResponse);
+            var paginationMetadata = new
+            {
+                totalCount = paginationResponse.TotalCount,
+                pageSize = paginationResponse.PageSize,
+                currentPage = paginationResponse.CurrentPage,
+                totalPages = paginationResponse.TotalPages
+            };
+
+            return Ok(new { items = paginationResponse, pagination = paginationMetadata });
         }
 
         [HttpOptions]

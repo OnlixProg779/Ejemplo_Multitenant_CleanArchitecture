@@ -18,6 +18,11 @@ namespace Multitenant.Application.Specification
                 }
             }
 
+            if(spec.Skip != 0 || spec.Take != 0)
+            {
+                inputQuery = inputQuery.Skip(spec.Skip).Take(spec.Take);
+            }
+
             inputQuery = spec.Includes.Aggregate(inputQuery, (current, include) => current.Include(include));
             return inputQuery;
         }

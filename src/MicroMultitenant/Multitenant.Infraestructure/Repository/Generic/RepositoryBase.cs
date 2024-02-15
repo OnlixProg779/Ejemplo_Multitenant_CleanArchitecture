@@ -39,7 +39,7 @@ namespace Multitenant.Infraestructure.Repository.Generic
 
         public async Task<int> CountAsync(ISpecification<T> spec)
         {
-            return await ApplySpecification(spec, true).CountAsync();
+            return await ApplySpecification(spec, disableTracking: true).CountAsync();
         }
 
         public async Task<List<T>> GetAllWithSpec(ISpecification<T> spec, bool disableTracking = true)
