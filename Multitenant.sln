@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multitenant.Domain", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multitenant.Infraestructure", "src\MicroMultitenant\Multitenant.Infraestructure\Multitenant.Infraestructure.csproj", "{E1FF1C43-296B-4579-9B3F-27BEE5A922A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multitenant.Application.Test", "test\Multitenant.Application.Test\Multitenant.Application.Test.csproj", "{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{E1FF1C43-296B-4579-9B3F-27BEE5A922A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1FF1C43-296B-4579-9B3F-27BEE5A922A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1FF1C43-296B-4579-9B3F-27BEE5A922A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{2B246C33-6FA8-43E7-84B6-BA2097CFEB29} = {24D6DE71-C32C-4619-BA3A-A0C5525F523C}
 		{9700FDCB-8EB7-4150-904A-9C976CD63CB7} = {24D6DE71-C32C-4619-BA3A-A0C5525F523C}
 		{E1FF1C43-296B-4579-9B3F-27BEE5A922A3} = {24D6DE71-C32C-4619-BA3A-A0C5525F523C}
+		{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F} = {0366F7F2-F19F-4A5A-83F0-A4732255403B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7322E980-CAD7-45F4-96D4-1E096295523F}

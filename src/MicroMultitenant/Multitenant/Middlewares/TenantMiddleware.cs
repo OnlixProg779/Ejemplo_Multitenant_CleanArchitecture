@@ -1,6 +1,4 @@
-﻿using MediatR;
-using Multitenant.Application.CQRS.Commands.CreateUser.Resources;
-using Multitenant.Application.Exceptions;
+﻿using Multitenant.Application.Exceptions;
 using Multitenant.Application.Helpers;
 using Multitenant.Helpers;
 using Newtonsoft.Json;

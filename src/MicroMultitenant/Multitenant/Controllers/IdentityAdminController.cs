@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Multitenant.Application.Contracts.Services;
-using Multitenant.Application.CQRS.Commands.CreateUser.Resources;
-using Multitenant.Application.CQRS.Commands.CreateUser;
 using Multitenant.Application.Models.LoginService;
-using Multitenant.Application.CQRS.Commands.CreateOrganization;
-using Multitenant.Application.CQRS.Commands.CreateOrganization.Resources;
 using Multitenant.Application.Constants;
+using Multitenant.Application.CQRS.Identity.Commands.CreateOrganization.Resources;
+using Multitenant.Application.CQRS.Identity.Commands.CreateUser.Resources;
+using Multitenant.Application.CQRS.Identity.Commands.CreateOrganization;
+using Multitenant.Application.CQRS.Identity.Commands.CreateUser;
 
 namespace Multitenant.Controllers
 {

@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.Contracts.Repository.Generic;
+using Multitenant.Application.Contracts.Repository.Product;
 using Multitenant.Application.Helpers;
 using Multitenant.Domain.Common;
 using Multitenant.Infraestructure.Persistence;
 using Multitenant.Infraestructure.Repository.Generic;
+using Multitenant.Infraestructure.Repository.Product;
 using System.Collections;
 
 namespace Multitenant.Infraestructure.Repository
@@ -12,13 +14,16 @@ namespace Multitenant.Infraestructure.Repository
     public class UnitOfWorkBusiness: IUnitOfWorkBusiness
     {
         private readonly BusinessDbContext _businessDbContext;
-        protected Hashtable _repositories; 
+        protected Hashtable _repositories;
+        public IProductRepository _ProductRepository;
 
         public UnitOfWorkBusiness(BusinessDbContext businessDbContext)
         {
             _businessDbContext = businessDbContext ??
            throw new ArgumentNullException(nameof(businessDbContext));
         }
+
+        public IProductRepository ProductRepository => _ProductRepository ?? new ProductRepository(_businessDbContext);
 
         public async Task<int> Complete(MyTokenInformation token)
         {

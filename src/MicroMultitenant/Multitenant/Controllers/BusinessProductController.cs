@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Multitenant.Application.CQRS.Commands.Products.ChangeActivators;
-using Multitenant.Application.CQRS.Commands.Products.ChangeActivators.Resources;
-using Multitenant.Application.CQRS.Commands.Products.CreateProduct;
-using Multitenant.Application.CQRS.Commands.Products.CreateProduct.Resources;
-using Multitenant.Application.CQRS.Commands.Products.PatchProduct;
-using Multitenant.Application.CQRS.Commands.Products.PatchProduct.Resources;
-using Multitenant.Application.CQRS.Queries.Products.GetById;
-using Multitenant.Application.CQRS.Queries.Products.GetPaginParams;
-using Multitenant.Application.CQRS.Queries.Products.Vms;
+using Multitenant.Application.CQRS.Products.Commands.ChangeActivators;
+using Multitenant.Application.CQRS.Products.Commands.ChangeActivators.Resources;
+using Multitenant.Application.CQRS.Products.Commands.CreateProduct;
+using Multitenant.Application.CQRS.Products.Commands.CreateProduct.Resources;
+using Multitenant.Application.CQRS.Products.Commands.PatchProduct;
+using Multitenant.Application.CQRS.Products.Commands.PatchProduct.Resources;
+using Multitenant.Application.CQRS.Products.Queries.GetById;
+using Multitenant.Application.CQRS.Products.Queries.GetPaginParams;
+using Multitenant.Application.CQRS.Products.Queries.Vms;
 using System.Net;
 
 namespace Multitenant.Controllers

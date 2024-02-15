@@ -1,5 +1,5 @@
 ﻿using Multitenant.Application.Contracts.Specification;
-using Multitenant.Application.CQRS.Commands.Products.ChangeActivators.Resources;
+using Multitenant.Application.CQRS.Products.Commands.ChangeActivators.Resources;
 using Multitenant.Domain.Common;
 using System.Linq.Expressions;
 
