@@ -1,16 +1,22 @@
-﻿using Moq;
-using Multitenant.Application.Contracts.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
+using Multitenant.Infraestructure.Persistence;
+using Multitenant.Infraestructure.Repository;
 
 namespace Multitenant.Application.Test.Mocks
 {
     public static class MockUnitOfWorkBusiness
     {
-        public static Mock<IUnitOfWorkBusiness> GetUnitOfWorkBusiness()
+        public static Mock<UnitOfWorkBusiness> GetUnitOfWorkBusiness()
         {
-            var mockUnitOfWorkBusiness = new Mock<IUnitOfWorkBusiness>();
-            var mockProductoRepository = MockProductoRepository.GetProductByIdRepository();
+            var options = new DbContextOptionsBuilder<BusinessDbContext>()
+              .UseInMemoryDatabase(databaseName: $"BusinessDbContext-{Guid.NewGuid()}")
+              .Options;
 
-            mockUnitOfWorkBusiness.Setup(r => r.ProductRepository).Returns(mockProductoRepository.Object);
+            var businessDbContextFake = new BusinessDbContext(options, null);
+            businessDbContextFake.Database.EnsureDeleted();
+            var mockUnitOfWorkBusiness = new Mock<UnitOfWorkBusiness>(businessDbContextFake);
+
 
             return mockUnitOfWorkBusiness;
         }

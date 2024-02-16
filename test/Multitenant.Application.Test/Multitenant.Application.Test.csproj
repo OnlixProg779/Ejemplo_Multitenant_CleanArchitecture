@@ -31,8 +31,4 @@
     <ProjectReference Include="..\..\src\MicroMultitenant\Multitenant.Infraestructure\Multitenant.Infraestructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQRS\Products\Commands\" />
-  </ItemGroup>
-
 </Project>

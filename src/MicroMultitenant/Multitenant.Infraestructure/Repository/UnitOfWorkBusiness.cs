@@ -17,6 +17,7 @@ namespace Multitenant.Infraestructure.Repository
         protected Hashtable _repositories;
         public IProductRepository _ProductRepository;
 
+        public BusinessDbContext BusinessDbContext => _businessDbContext;
         public UnitOfWorkBusiness(BusinessDbContext businessDbContext)
         {
             _businessDbContext = businessDbContext ??
