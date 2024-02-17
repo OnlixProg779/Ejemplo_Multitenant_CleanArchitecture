@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using Base.Application.Helpers;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Products.Commands.ChangeActivators.Resources;
-using Multitenant.Application.Helpers;
 
 namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators
 
@@ -28,9 +28,9 @@ namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators
         {
             var respToken = new MyTokenInformation(request.Token);
 
-            var entityFromRepo = await _unitOfWork.Repository<Domain.Bussines.Products>().GetByIdToCommandAsync(request.Id);
+            var entityFromRepo = await _unitOfWork.Repository<Domain.Bussines.Product>().GetByIdToCommandAsync(request.Id);
 
-            var respo = await _unitOfWork.Repository<Domain.Bussines.Products>().ChangeActive(entityFromRepo, request.Active);
+            var respo = (ProductChangeActivatorsResponse) await _unitOfWork.Repository<Domain.Bussines.Product>().ChangeActive(entityFromRepo, request.Active);
             respo.ResponseChange = await _unitOfWork.Complete(respToken);
             if (respo.ResponseChange >= 1)
             {

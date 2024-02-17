@@ -1,7 +1,7 @@
-﻿using Multitenant.Application.Contracts.Repository.Generic;
+﻿using Base.Application.Contracts.Repository;
+using Base.Application.Helpers;
+using Base.Domain.Common;
 using Multitenant.Application.Contracts.Repository.Product;
-using Multitenant.Application.Helpers;
-using Multitenant.Domain.Common;
 
 namespace Multitenant.Application.Contracts.Repository
 {

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MediatR;
-using ValidationException = Multitenant.Application.Exceptions.ValidationException;
 
 
 namespace Multitenant.Application.Behaviors

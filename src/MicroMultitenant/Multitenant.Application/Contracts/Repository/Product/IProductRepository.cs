@@ -1,9 +1,8 @@
-﻿using Multitenant.Application.Contracts.Repository.Generic;
-using Multitenant.Domain.Bussines;
+﻿using Base.Application.Contracts.Repository;
 
 namespace Multitenant.Application.Contracts.Repository.Product
 {
-    public interface IProductRepository : IAsyncRepository<Products>
+    public interface IProductRepository : IAsyncRepository<Domain.Bussines.Product>
     {
     }
 }

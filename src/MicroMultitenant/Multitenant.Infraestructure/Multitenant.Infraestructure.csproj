@@ -7,11 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
+	  <ProjectReference Include="..\..\SrcBase\Base.Infraestructure\Base.Infraestructure.csproj" />
 	  <ProjectReference Include="..\Multitenant.Application\Multitenant.Application.csproj" />
 	</ItemGroup>
 

@@ -1,9 +1,9 @@
-﻿namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators.Resources
+﻿using Base.Application.CQRS.Commands;
+
+namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators.Resources
 {
-    public class ProductChangeActivatorsResponse
+    public class ProductChangeActivatorsResponse: ChangeActivatorsResponse
     {
-        public int ResponseChange { get; set; } = 0;
-        public bool? NewValue { get; set; }
-        public List<string>? ResponseMessage { get; set; }
+
     }
 }

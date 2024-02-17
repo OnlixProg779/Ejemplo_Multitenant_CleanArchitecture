@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Base.Domain.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Multitenant.Domain.Bussines;
-using Multitenant.Domain.Common;
 
 namespace Multitenant.Infraestructure.Persistence
 {
     public class BusinessDbContext : DbContext
     {
-        public virtual DbSet<Products>? Products { get; set; }
+        public virtual DbSet<Product>? Products { get; set; }
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public BusinessDbContext(DbContextOptions<BusinessDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
@@ -58,7 +58,7 @@ namespace Multitenant.Infraestructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Products>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("(md5(((random())::text || (clock_timestamp())::text)))::uuid");
             });

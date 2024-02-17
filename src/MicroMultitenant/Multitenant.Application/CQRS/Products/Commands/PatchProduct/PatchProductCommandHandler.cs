@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Base.Application.CQRS.Queries.Vms;
+using Base.Application.Helpers;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Products.Commands.PatchProduct.Resources;
-using Multitenant.Application.CQRS.Products.Queries.Vms;
-using Multitenant.Application.Helpers;
 
 namespace Multitenant.Application.CQRS.Products.Commands.PatchProduct
 
@@ -35,7 +35,7 @@ namespace Multitenant.Application.CQRS.Products.Commands.PatchProduct
         {
             var respToken = new MyTokenInformation(request.Token);
 
-            var entityFromRepo = await _unitOfWork.Repository<Domain.Bussines.Products>().GetByIdToCommandAsync(request.Id);
+            var entityFromRepo = await _unitOfWork.Repository<Domain.Bussines.Product>().GetByIdToCommandAsync(request.Id);
 
             List<string>? responseMessage = new List<string>();
 
@@ -76,7 +76,7 @@ namespace Multitenant.Application.CQRS.Products.Commands.PatchProduct
 
             _mapper.Map(entityToPatch, entityFromRepo);
 
-            _unitOfWork.Repository<Domain.Bussines.Products>().UpdateEntity(entityFromRepo);
+            _unitOfWork.Repository<Domain.Bussines.Product>().UpdateEntity(entityFromRepo);
 
             var result = await _unitOfWork.Complete(respToken);
 

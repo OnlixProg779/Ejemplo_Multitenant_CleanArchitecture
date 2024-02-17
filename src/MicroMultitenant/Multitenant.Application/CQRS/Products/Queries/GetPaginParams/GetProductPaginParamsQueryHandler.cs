@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Base.Application.CQRS.Queries.Vms;
 using MediatR;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Products.Queries.GetPaginParams.Resources;
@@ -39,13 +40,13 @@ namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams
             var criteria = entitySpecificationParams.GetCriteria();
 
             var specCount = new ProductForCountingSpecification(criteria);
-            var totalEntities = await _unitOfWork.Repository<Domain.Bussines.Products>().CountAsync(specCount);
+            var totalEntities = await _unitOfWork.Repository<Domain.Bussines.Product>().CountAsync(specCount);
 
             var spec = new ProductSpecification(entitySpecificationParams, criteria);
 
-            var entities = await _unitOfWork.Repository<Domain.Bussines.Products>().GetAllWithSpec(spec);
+            var entities = await _unitOfWork.Repository<Domain.Bussines.Product>().GetAllWithSpec(spec);
 
-            var data = _mapper.Map<List<Domain.Bussines.Products>, List<ProductVm>>(entities);
+            var data = _mapper.Map<List<Domain.Bussines.Product>, List<ProductVm>>(entities);
 
             var pagination = new PaginationVm<ProductVm>(data, totalEntities, request.PageIndex, request.PageSize);
 

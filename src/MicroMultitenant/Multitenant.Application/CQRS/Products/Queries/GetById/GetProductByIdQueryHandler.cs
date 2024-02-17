@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Base.Application.Helpers;
 using MediatR;
 using Multitenant.Application.Contracts.Repository;
 using Multitenant.Application.CQRS.Products.Queries.Vms;
-using Multitenant.Application.Helpers;
 
 namespace Multitenant.Application.CQRS.Products.Queries.GetById
 

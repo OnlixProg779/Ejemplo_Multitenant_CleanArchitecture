@@ -19,7 +19,8 @@
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Multitenant.Application\Multitenant.Application.csproj" />
+	  
+    <ProjectReference Include="..\..\SrcBase\Base.Api\Base.Api.csproj" />
     <ProjectReference Include="..\Multitenant.Infraestructure\Multitenant.Infraestructure.csproj" />
   </ItemGroup>
 

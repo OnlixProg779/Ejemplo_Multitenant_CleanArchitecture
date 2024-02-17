@@ -14,7 +14,7 @@ namespace Multitenant.Application.Test.Mocks
         {
             var fixture = new Fixture();
             fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-            var productos = fixture.CreateMany<Products>(10).ToList();
+            var productos = fixture.CreateMany<Product>(10).ToList();
 
             productos[0].Id =  new Guid("33c59e3b-9cf7-4fdb-a25b-5c1ff06248c4");
 

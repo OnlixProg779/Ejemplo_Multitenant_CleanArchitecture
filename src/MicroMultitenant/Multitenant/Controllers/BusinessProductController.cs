@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Base.Application.CQRS.Queries.Vms;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Multitenant.Application.CQRS.Products.Commands.ChangeActivators;

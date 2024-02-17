@@ -10,12 +10,12 @@ namespace Multitenant.Application.CQRS.Products.Queries.Vms
         public ProductMappingProfile()
         {
 
-            CreateMap<CreateProductCommand, Domain.Bussines.Products>();
-            CreateMap<Domain.Bussines.Products, ProductPropertyPatch>();
-            CreateMap<Domain.Bussines.Products, CreateProductResponse>();
-            CreateMap<Domain.Bussines.Products, PatchProductResponse>();
-            CreateMap<Domain.Bussines.Products, ProductVm>();
-            CreateMap<ProductPropertyPatch, Domain.Bussines.Products>();
+            CreateMap<CreateProductCommand, Domain.Bussines.Product>();
+            CreateMap<Domain.Bussines.Product, ProductPropertyPatch>();
+            CreateMap<Domain.Bussines.Product, CreateProductResponse>();
+            CreateMap<Domain.Bussines.Product, PatchProductResponse>();
+            CreateMap<Domain.Bussines.Product, ProductVm>();
+            CreateMap<ProductPropertyPatch, Domain.Bussines.Product>();
 
 
         }

@@ -1,5 +1,4 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Multitenant.Application.CQRS.Products.Commands.PatchProduct
 {

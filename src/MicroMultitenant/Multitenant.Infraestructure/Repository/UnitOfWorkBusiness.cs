@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Base.Application.Contracts.Repository;
+using Base.Application.Helpers;
+using Base.Domain.Common;
+using Base.Infraestructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using Multitenant.Application.Contracts.Repository;
-using Multitenant.Application.Contracts.Repository.Generic;
 using Multitenant.Application.Contracts.Repository.Product;
-using Multitenant.Application.Helpers;
-using Multitenant.Domain.Common;
 using Multitenant.Infraestructure.Persistence;
-using Multitenant.Infraestructure.Repository.Generic;
 using Multitenant.Infraestructure.Repository.Product;
 using System.Collections;
 

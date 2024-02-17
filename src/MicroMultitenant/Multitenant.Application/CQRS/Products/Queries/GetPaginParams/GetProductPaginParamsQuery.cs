@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Base.Application.CQRS.Queries.Vms;
+using MediatR;
 using Multitenant.Application.CQRS.Products.Queries.Vms;
 
 namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams

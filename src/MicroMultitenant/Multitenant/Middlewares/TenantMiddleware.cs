@@ -1,6 +1,6 @@
-﻿using Multitenant.Application.Exceptions;
-using Multitenant.Application.Helpers;
-using Multitenant.Helpers;
+﻿using Base.Application.Exceptions;
+using Base.Application.Helpers;
+using Base.Helpers;
 using Newtonsoft.Json;
 
 namespace Multitenant.Middlewares
@@ -59,7 +59,7 @@ namespace Multitenant.Middlewares
                 string result = string.Empty;
                 if (!(ex is NotFoundException))
                 {
-                    if (!(ex is Application.Exceptions.ValidationException validationException))
+                    if (!(ex is ValidationException validationException))
                     {
                         if (ex is BadRequestException)
                         {

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 
 namespace Multitenant.Application.CQRS.Products.Commands.CreateProduct
-
 {
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {

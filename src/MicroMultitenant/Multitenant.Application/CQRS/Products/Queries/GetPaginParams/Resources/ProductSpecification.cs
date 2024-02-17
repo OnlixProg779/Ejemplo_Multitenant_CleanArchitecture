@@ -1,14 +1,14 @@
-﻿using Multitenant.Application.Specification;
+﻿using Base.Application.Specification;
 using System.Linq.Expressions;
 
 namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams.Resources
 {
-    public class ProductSpecification : BaseSpecification<Domain.Bussines.Products>
+    public class ProductSpecification : BaseSpecification<Domain.Bussines.Product>
     {
 
         public ProductSpecification(
            ProductSpecificationParams entityParams,
-           List<Expression<Func<Domain.Bussines.Products, bool>>> criteria)
+           List<Expression<Func<Domain.Bussines.Product, bool>>> criteria)
             : base(criteria)
         {
 

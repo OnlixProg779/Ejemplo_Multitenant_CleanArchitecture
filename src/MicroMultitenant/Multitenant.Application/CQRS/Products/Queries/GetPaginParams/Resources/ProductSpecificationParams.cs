@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Multitenant.Application.CQRS.Products.Queries.GetPaginParams;
 
 namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams.Resources
 {
@@ -35,7 +34,7 @@ namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams.Resources
             _ProductPaginParams = new ProductPaginParams();
         }
 
-        public List<Expression<Func<Domain.Bussines.Products, bool>>> GetCriteria()
+        public List<Expression<Func<Domain.Bussines.Product, bool>>> GetCriteria()
         {
             var listCriteria = GetStandarCriteria(_ProductPaginParams);
 
@@ -63,9 +62,9 @@ namespace Multitenant.Application.CQRS.Products.Queries.GetPaginParams.Resources
             return listCriteria;
         }
 
-        public List<Expression<Func<Domain.Bussines.Products, bool>>> GetStandarCriteria(ProductPaginParams standarBaseQuery)
+        public List<Expression<Func<Domain.Bussines.Product, bool>>> GetStandarCriteria(ProductPaginParams standarBaseQuery)
         {
-            List<Expression<Func<Domain.Bussines.Products, bool>>> list = new List<Expression<Func<Domain.Bussines.Products, bool>>>();
+            List<Expression<Func<Domain.Bussines.Product, bool>>> list = new List<Expression<Func<Domain.Bussines.Product, bool>>>();
             if (standarBaseQuery.Active.HasValue)
             {
                 list.Add((x) => x.Active == standarBaseQuery.Active);
