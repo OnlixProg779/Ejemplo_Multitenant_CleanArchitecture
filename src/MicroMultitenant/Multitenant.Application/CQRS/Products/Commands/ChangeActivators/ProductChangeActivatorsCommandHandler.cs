@@ -30,7 +30,7 @@ namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators
 
             var entityFromRepo = await _unitOfWork.Repository<Domain.Bussines.Product>().GetByIdToCommandAsync(request.Id);
 
-            var respo = (ProductChangeActivatorsResponse) await _unitOfWork.Repository<Domain.Bussines.Product>().ChangeActive(entityFromRepo, request.Active);
+            var respo = await _unitOfWork.Repository<Domain.Bussines.Product>().ChangeActive(entityFromRepo, request.Active);
             respo.ResponseChange = await _unitOfWork.Complete(respToken);
             if (respo.ResponseChange >= 1)
             {
@@ -40,7 +40,7 @@ namespace Multitenant.Application.CQRS.Products.Commands.ChangeActivators
             {
                 _logger.LogError("Change Editable No se realizo");
             }
-            return respo;
+            return new ProductChangeActivatorsResponse(respo);
         }
     }
 }
