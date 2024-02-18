@@ -14,7 +14,6 @@ namespace DemoAuth.Infraestructure
     {
         public static IServiceCollection ConfigureDemoAuthServices(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddDbContext<IdentityOrganizationDbContext>(options =>
                options.UseNpgsql(configuration.GetConnectionString("IdentityOrganization"), 
                b => b.MigrationsAssembly(typeof(IdentityOrganizationDbContext).Assembly.FullName)
