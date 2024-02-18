@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  demoauth.api:
+    image: ${DOCKER_REGISTRY-}demoauthapi
+    build:
+      context: .
+      dockerfile: src/MicroAutenticathion/DemoAuth.Api/Dockerfile
+
+  multitenant:
+    image: ${DOCKER_REGISTRY-}multitenant
+    build:
+      context: .
+      dockerfile: src/MicroMultitenant/Multitenant/Dockerfile
+networks:
+  default:
+    external:
+      name: multitenantnet
+
