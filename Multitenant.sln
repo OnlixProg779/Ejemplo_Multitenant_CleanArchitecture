@@ -23,25 +23,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multitenant.Infraestructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multitenant.Application.Test", "test\Multitenant.Application.Test\Multitenant.Application.Test.csproj", "{6810DDFC-160E-449E-BBF8-3DBCAC3DB72F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAuth.Application", "src\MicroAutenticathion\DemoAuth.Application\DemoAuth.Application.csproj", "{A214DAFF-B919-4087-B838-9BBF63F562E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAuth.Application", "src\MicroAutenticathion\DemoAuth.Application\DemoAuth.Application.csproj", "{A214DAFF-B919-4087-B838-9BBF63F562E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAuth.Domain", "src\MicroAutenticathion\DemoAuth.Domain\DemoAuth.Domain.csproj", "{C824768F-11D8-47C4-8528-0E0896E3B93D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAuth.Domain", "src\MicroAutenticathion\DemoAuth.Domain\DemoAuth.Domain.csproj", "{C824768F-11D8-47C4-8528-0E0896E3B93D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAuth.Infraestructure", "src\MicroAutenticathion\DemoAuth.Infraestructure\DemoAuth.Infraestructure.csproj", "{FA139665-2F2E-4AA7-968C-4FC6C378E321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAuth.Infraestructure", "src\MicroAutenticathion\DemoAuth.Infraestructure\DemoAuth.Infraestructure.csproj", "{FA139665-2F2E-4AA7-968C-4FC6C378E321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAuth.Api", "src\MicroAutenticathion\DemoAuth.Api\DemoAuth.Api.csproj", "{6314DFF0-FE4A-4671-B0DB-F03CE4E78AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAuth.Api", "src\MicroAutenticathion\DemoAuth.Api\DemoAuth.Api.csproj", "{6314DFF0-FE4A-4671-B0DB-F03CE4E78AF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SrcBase", "SrcBase", "{6E7787B2-F921-4F7E-BA99-788E78084BC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Api", "src\SrcBase\Base.Api\Base.Api.csproj", "{7E0ADF2D-B16A-4819-8CA1-6C38898AE93D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Api", "src\SrcBase\Base.Api\Base.Api.csproj", "{7E0ADF2D-B16A-4819-8CA1-6C38898AE93D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Application", "src\SrcBase\Base.Application\Base.Application.csproj", "{C14E74B0-691D-4B0E-8178-96CBD8C859A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Application", "src\SrcBase\Base.Application\Base.Application.csproj", "{C14E74B0-691D-4B0E-8178-96CBD8C859A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Infraestructure", "src\SrcBase\Base.Infraestructure\Base.Infraestructure.csproj", "{F7A0560B-08AA-426C-87D8-ADE0CF445B03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Infraestructure", "src\SrcBase\Base.Infraestructure\Base.Infraestructure.csproj", "{F7A0560B-08AA-426C-87D8-ADE0CF445B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.Domain", "src\SrcBase\Base.Domain\Base.Domain.csproj", "{C6201E9C-F34D-4E22-A617-57AB794622E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Domain", "src\SrcBase\Base.Domain\Base.Domain.csproj", "{C6201E9C-F34D-4E22-A617-57AB794622E0}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateWay", "ApiGateWay", "{6499207F-FD37-42D2-B423-A16ED3A6AB35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultitenantGateway.Api", "src\ApiGateway\MultitenantGateway.Api\MultitenantGateway.Api.csproj", "{C70A42F0-DD26-4794-86C1-006777843A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +109,10 @@ Global
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70A42F0-DD26-4794-86C1-006777843A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70A42F0-DD26-4794-86C1-006777843A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70A42F0-DD26-4794-86C1-006777843A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70A42F0-DD26-4794-86C1-006777843A54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +134,8 @@ Global
 		{C14E74B0-691D-4B0E-8178-96CBD8C859A5} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
 		{F7A0560B-08AA-426C-87D8-ADE0CF445B03} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
 		{C6201E9C-F34D-4E22-A617-57AB794622E0} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
+		{6499207F-FD37-42D2-B423-A16ED3A6AB35} = {AE02289E-BFC0-4D14-A202-BBF9C6A97B7E}
+		{C70A42F0-DD26-4794-86C1-006777843A54} = {6499207F-FD37-42D2-B423-A16ED3A6AB35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7322E980-CAD7-45F4-96D4-1E096295523F}
