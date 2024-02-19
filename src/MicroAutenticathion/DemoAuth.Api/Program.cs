@@ -22,8 +22,8 @@ builder.Services.ConfigureBaseInfraestructureServices(builder.Configuration);
 builder.Services.AddExtendJwtServices(builder.Configuration);
 
 // application
-//builder.Services.AddDemoAuthApplicationServices();
 builder.Services.AddExtendApplicationServices();
+builder.Services.AddDemoAuthApplicationServices();
 builder.Services.AddRolesServices();
 builder.Services.AddHttpContextAccessor();
 
@@ -36,6 +36,14 @@ builder.Services.AddCors(options =>
     );
 });
 
+builder.Services.AddHttpClient("ClientConCertificadoIgnorado", c =>
+{
+    // Configuración del cliente
+})
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+    });
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -85,6 +93,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-await DemoAuthApplicationRegister.LoadRolesAsync(app);
+await ApplicationServiceRegistration.LoadRolesAsync(app);
 
 app.Run();

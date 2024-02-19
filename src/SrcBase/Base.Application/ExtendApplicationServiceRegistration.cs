@@ -1,7 +1,5 @@
 ﻿using Base.Application.Models;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Base.Application
 {
@@ -9,11 +7,7 @@ namespace Base.Application
     {
         public static IServiceCollection AddExtendApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(
-               cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+          
 
             return services;
         }

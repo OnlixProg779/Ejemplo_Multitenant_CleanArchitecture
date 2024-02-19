@@ -1,4 +1,5 @@
-﻿using Base.Application.Exceptions;
+﻿using Base.Application.Constants;
+using Base.Application.Exceptions;
 using Base.Application.Helpers;
 using Base.Helpers;
 using Newtonsoft.Json;
@@ -35,7 +36,7 @@ namespace Multitenant.Middlewares
                 {
                     var token = context.Request.Headers["Authorization"].ToString();
                     var respToken = new MyTokenInformation(token);
-                    if (organizationName != respToken.OrganizationName)
+                    if (respToken.Role != CustomRoles.AdminPro && organizationName != respToken.OrganizationName)
                     {
                         _logger.LogInformation("No pertenece a la organización: {OrganizationName}", organizationName);
                         throw new Exception("El usuario no pertenece a la organización");

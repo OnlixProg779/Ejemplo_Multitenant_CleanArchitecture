@@ -20,8 +20,8 @@ builder.Services.ConfigureBaseInfraestructureServices(builder.Configuration);
 builder.Services.AddExtendJwtServices(builder.Configuration);
 
 // application
-builder.Services.AddMultitenantApplicationServices();
 builder.Services.AddExtendApplicationServices();
+builder.Services.AddMultitenantApplicationServices();
 builder.Services.AddRolesServices();
 builder.Services.AddHttpContextAccessor();
 

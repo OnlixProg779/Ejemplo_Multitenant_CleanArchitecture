@@ -8,5 +8,6 @@ namespace Multitenant.Domain.Bussines
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Duration { get; set; } = null!;
+
     }
 }
