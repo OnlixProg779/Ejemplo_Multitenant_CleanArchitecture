@@ -1,0 +1,28 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/IdentityAdmin/CreateOrganization",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "DemoAuth.Api",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/CreateOrganization",
+      "UpstreamHttpMethod": [ "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/IdentityAdmin/CreateUser/company/{organization}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "DemoAuth.Api",
+          "Port": 8081
+        }
+      ],
+      "UpstreamPathTemplate": "/CrearUser/{organization}",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ]
+}

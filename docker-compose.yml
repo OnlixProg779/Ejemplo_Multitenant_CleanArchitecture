@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  multitenantgateway.api:
+    image: ${DOCKER_REGISTRY-}multitenantgatewayapi
+    build:
+      context: .
+      dockerfile: src/ApiGateway/MultitenantGateway.Api/Dockerfile
+
   demoauth.api:
     image: ${DOCKER_REGISTRY-}demoauthapi
     build:

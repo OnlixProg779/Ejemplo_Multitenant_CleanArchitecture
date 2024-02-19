@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "demoauth.api": "StartDebugging",
-        "multitenant": "StartDebugging"
+        "multitenant": "StartDebugging",
+        "multitenantgateway.api": "StartDebugging"
       }
     }
   }
