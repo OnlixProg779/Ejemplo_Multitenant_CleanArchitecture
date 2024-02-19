@@ -43,6 +43,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base.Domain", "src\SrcBase\
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{F4387233-92F1-4061-A7EF-FB01AE710ADE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DsAlpha.TrackingLogs", "src\Libraries\DsAlpha.TrackingLogs\DsAlpha.TrackingLogs.csproj", "{0F32582B-E0EA-4796-A481-B9E79E940549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,10 @@ Global
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AEF17A9-6CD5-40B6-834C-C20A6C8E0E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F32582B-E0EA-4796-A481-B9E79E940549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F32582B-E0EA-4796-A481-B9E79E940549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F32582B-E0EA-4796-A481-B9E79E940549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F32582B-E0EA-4796-A481-B9E79E940549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +134,8 @@ Global
 		{C14E74B0-691D-4B0E-8178-96CBD8C859A5} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
 		{F7A0560B-08AA-426C-87D8-ADE0CF445B03} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
 		{C6201E9C-F34D-4E22-A617-57AB794622E0} = {6E7787B2-F921-4F7E-BA99-788E78084BC9}
+		{F4387233-92F1-4061-A7EF-FB01AE710ADE} = {AE02289E-BFC0-4D14-A202-BBF9C6A97B7E}
+		{0F32582B-E0EA-4796-A481-B9E79E940549} = {F4387233-92F1-4061-A7EF-FB01AE710ADE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7322E980-CAD7-45F4-96D4-1E096295523F}
