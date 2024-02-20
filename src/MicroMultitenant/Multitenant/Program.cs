@@ -3,6 +3,9 @@ using Multitenant.Application;
 using Multitenant.Middlewares;
 using Base.Infraestructure;
 using Base.Application;
+using DsAlpha.RedisStream;
+using Hangfire;
+using Hangfire.Dashboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,13 @@ builder.Services.AddExtendJwtServices(builder.Configuration);
 builder.Services.AddExtendApplicationServices();
 builder.Services.AddMultitenantApplicationServices();
 builder.Services.AddRolesServices();
+builder.Services.ConfigureRedisServices(builder.Configuration);
+
+
+builder.Services.ConfigureHangfireClienteServices(builder.Configuration);
+builder.Services.ConfigureHangfireServerServices();
+builder.Services.ConfigurePublishRedisHangfireServices();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options => 
@@ -53,6 +63,12 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    // Configuración de autorización
+    Authorization = new[] { new HangfireAuthorizationFilter() }
+});
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -67,3 +83,15 @@ app.UseEndpoints(endpoints =>
 //await ExtendApplicationServiceRegistration.LoadRolesAsync(app);
 
 app.Run();
+
+
+public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+{
+    public bool Authorize(DashboardContext context)
+    {
+        // Implementa tu lógica de autorización aquí
+        // Ejemplo: permite el acceso solo en desarrollo
+        var httpContext = context.GetHttpContext();
+        return httpContext.User.Identity.IsAuthenticated || Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+    }
+}

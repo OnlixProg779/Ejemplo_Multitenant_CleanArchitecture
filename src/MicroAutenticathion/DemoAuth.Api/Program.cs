@@ -5,6 +5,7 @@ using DemoAuth.Infraestructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DemoAuth.Application;
+using DsAlpha.RedisStream;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,13 @@ builder.Services.AddExtendJwtServices(builder.Configuration);
 builder.Services.AddExtendApplicationServices();
 builder.Services.AddDemoAuthApplicationServices();
 builder.Services.AddRolesServices();
+builder.Services.ConfigureRedisServices(builder.Configuration);
+
+builder.Services.ConfigureHangfireClienteServices(builder.Configuration);
+builder.Services.ConfigurePublishRedisHangfireServices();
+
+
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
