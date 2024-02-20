@@ -20,13 +20,14 @@ namespace DsAlpha.RedisStream.Infraestructure
             private readonly ILogger<RedisStreamService> _logger;
             private readonly IAsyncPolicy _retryPolicy;
             private readonly string _streamName = "RegistrarLogMonitorPbo";
-            private readonly long _maxMessagesInStream = 100; // Ejemplo, ajustar según necesidades
-            //private readonly IBackgroundJobClient _backgroundJobClient;
-
+            private readonly long _maxMessagesInStream = 2; // Ejemplo, ajustar según necesidades
+            private readonly IBackgroundJobClient _backgroundJobClient;
+            private readonly IRecurringJobManager _recurringJobManager;
             public RedisStreamService(
                 IConnectionMultiplexer redis, 
                 ILogger<RedisStreamService> logger
-                //,IBackgroundJobClient backgroundJobClient
+                , IBackgroundJobClient backgroundJobClient
+                , IRecurringJobManager recurringJobManager
                 )
             {
                 _db = redis.GetDatabase();
@@ -39,9 +40,9 @@ namespace DsAlpha.RedisStream.Infraestructure
                         {
                             _logger.LogWarning(exception, "Error al interactuar con Redis. Reintentando intento {RetryCount} en {Delay}s", retryCount, timespan.TotalSeconds);
                         });
-                //_backgroundJobClient = backgroundJobClient;
-
-                RecurringJob.AddOrUpdate("verificar_y_publicar_buffers", () => CheckAndPublishStreamAsync(), Cron.MinuteInterval(10));
+                _backgroundJobClient = backgroundJobClient;
+                _recurringJobManager = recurringJobManager;
+                _recurringJobManager.AddOrUpdate("verificar_y_publicar_buffers", () => CheckAndPublishStreamAsync(), Cron.MinuteInterval(10));
             }
 
             public async Task AddToStreamAsync<T>(T item)
@@ -56,7 +57,7 @@ namespace DsAlpha.RedisStream.Infraestructure
                 await CheckAndPublishStreamAsync();
             }
 
-            private async Task CheckAndPublishStreamAsync()
+            public async Task CheckAndPublishStreamAsync()
             {
                 var length = await _db.StreamLengthAsync(_streamName);
                 if (length >= _maxMessagesInStream)
@@ -69,8 +70,8 @@ namespace DsAlpha.RedisStream.Infraestructure
             {
                 await _retryPolicy.ExecuteAsync(async () =>
                 {
-                    BackgroundJob.Enqueue<StreamProcessingService>(service => service.ProcessStreamJob(_streamName));
-                    _logger.LogInformation($"Job encolado para procesar el stream: {_streamName}");
+                    _backgroundJobClient.Enqueue<StreamProcessingService>(service => service.ProcessStreamJob(_streamName));
+                    _logger.LogInformation($"{DateTime.UtcNow} - Job encolado para procesar el stream: {_streamName}");
                 });
             }
         }

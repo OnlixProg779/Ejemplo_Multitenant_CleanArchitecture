@@ -80,8 +80,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-//await ExtendApplicationServiceRegistration.LoadRolesAsync(app);
-
 app.Run();
 
 

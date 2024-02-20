@@ -36,19 +36,18 @@ namespace DsAlpha.RedisStream.Infraestructure
 
         public Task ProcessStreamJob(string streamName)
         {
-            // Crear un nuevo contexto y agregar datos a él
             var context = new Context();
             context["streamName"] = streamName;
 
             return _retryPolicy.ExecuteAsync(async (ctx) =>
             {
-                // Ahora puedes acceder a ctx["streamName"] dentro de esta lambda si es necesario
-                var streamEntries = await _redisDb.StreamReadAsync(streamName, "0-0", -1);
+                var streamEntries = await _redisDb.StreamReadAsync(streamName, "0-0", 2);
                 // Procesar los datos aquí...
-                foreach (var entry in streamEntries) { 
-                Console.WriteLine(entry);
-                }
-                _logger.LogInformation($"Procesando stream {streamName} con {streamEntries.Length} entradas.");
+                // leer cada uno de los elementos de la lista ;
+                // eliminar del redisStream los elementos que se han leido satisfactoriamente
+
+
+                _logger.LogInformation($"{DateTime.UtcNow} - Procesando stream {streamName} con {streamEntries.Length} entradas.");
             }, context);
         }
     }
