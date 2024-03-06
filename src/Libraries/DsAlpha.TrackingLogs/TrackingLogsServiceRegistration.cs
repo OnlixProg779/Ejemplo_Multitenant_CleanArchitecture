@@ -10,8 +10,7 @@ namespace Base.Application
     public static class TrackingLogsServiceRegistration
     {
         public static IServiceCollection ConfigureSerilogServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            //services.AddSingleton<IFormatProvider, CultureInfo>("en-US"); // Ejemplo de dependencia
+        { 
             services.AddSingleton<IFileFatalLogEventSink, FileFatalLogEventSink>();
             services.AddSingleton<IFileDebugLogEventSink, FileDebugLogEventSink>();
             services.AddSingleton<IDatabaseLogEventSink, DatabaseLogEventSink>();

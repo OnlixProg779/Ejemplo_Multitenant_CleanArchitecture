@@ -25,7 +25,7 @@ namespace DsAlpha.RedisStream.Infraestructure
         private void ConfigureRetryPolicy()
         {
             _retryPolicy = Policy
-                .Handle<RedisConnectionException>() // Suponiendo que los errores transitorios son de conexión
+                .Handle<RedisConnectionException>() // errores de conexión
                 .Or<RedisTimeoutException>()
                 .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                     (exception, timeSpan, retryCount, context) =>
