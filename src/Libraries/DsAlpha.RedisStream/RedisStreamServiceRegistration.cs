@@ -1,8 +1,7 @@
-﻿using DsAlpha.RedisStream.Infraestructure;
+﻿using DsAlpha.RedisStream.Application.Contracts;
 using DsAlpha.RedisStream.Infraestructure.DsAlpha.RedisStream.Infrastructure;
 using Hangfire;
 using Hangfire.Redis.StackExchange;
-using Hangfire.SqlServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,16 +28,16 @@ namespace DsAlpha.RedisStream
 
         }
 
-        public static IServiceCollection ConfigureHangfireServerServices(this IServiceCollection services)
+        public static IServiceCollection ConfigureHangfireServerServices<TClassService>(this IServiceCollection services) where TClassService : class, IJobStreamProcessorService
         {
+            services.AddScoped<IJobStreamProcessorService, TClassService>();
             services.AddHangfireServer();
             return services;
         }
 
         public static IServiceCollection ConfigurePublishRedisHangfireServices(this IServiceCollection services)
         {
-            services.AddSingleton<IRedisStreamService, RedisStreamService>();
-            services.AddSingleton<IStreamProcessingService, StreamProcessingService>();
+            services.AddSingleton<IJobInitOrganizationService, JobInitOrganizationService>();
 
             return services;
         }

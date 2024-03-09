@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using DsAlpha.RedisStream.Application.Contracts;
+using System.Linq.Dynamic.Core.Tokenizer;
 
 namespace DemoAuth.Application.CQRS.Identity.Commands.CreateOrganization
 {
@@ -21,6 +23,7 @@ namespace DemoAuth.Application.CQRS.Identity.Commands.CreateOrganization
         private readonly IUnitOfWorkIdentity _repositoryOrganization;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IJobInitOrganizationService _jobInitOrganizationService;
 
         public CreateOrganizationCommandHandler
             (
@@ -29,7 +32,8 @@ namespace DemoAuth.Application.CQRS.Identity.Commands.CreateOrganization
                 MyRoleService roles, 
                 IUnitOfWorkIdentity repositoryOrganization,
                 IHttpClientFactory httpClientFactory,
-                IConfiguration configuration
+                IConfiguration configuration,
+                IJobInitOrganizationService jobInitOrganizationService
             )
         {
             _logger = logger;
@@ -38,6 +42,7 @@ namespace DemoAuth.Application.CQRS.Identity.Commands.CreateOrganization
             _configuration = configuration;
             _repositoryOrganization = repositoryOrganization ?? throw new ArgumentNullException(nameof(repositoryOrganization));
             _httpClientFactory = httpClientFactory;
+            _jobInitOrganizationService = jobInitOrganizationService;
         }
 
         public async Task<CreateOrganizationResponse> Handle(CreateOrganizationCommand request, CancellationToken cancellationToken)
@@ -86,13 +91,25 @@ namespace DemoAuth.Application.CQRS.Identity.Commands.CreateOrganization
             }
 
             // TODO: Crear evento para creacion de tenant
-            await CallMicroserviceBusinessAsync(request.OrganizationName, request.Token[7..],cancellationToken);
+            await CreateJobToInitOrganization(request.OrganizationName, request.Token[7..]);
+            //await CallMicroserviceBusinessAsync(request.OrganizationName, request.Token[7..],cancellationToken);
       
             return new CreateOrganizationResponse
             {
                 Success = true,
                 UserId = user.Id
             };
+        }
+
+        private async Task CreateJobToInitOrganization(string organizationName, string token)
+        {
+            var save = new
+            {
+                OrganizationName = organizationName,
+                Token = token
+            };
+
+            await _jobInitOrganizationService.AddToStreamAsync(save);
         }
 
         private async Task CallMicroserviceBusinessAsync(string organizationName, string token, CancellationToken cancellationToken)

@@ -1,21 +1,18 @@
 ﻿using Polly;
 using StackExchange.Redis;
 using Microsoft.Extensions.Logging;
+using DsAlpha.RedisStream.Application.Contracts;
 
 namespace DsAlpha.RedisStream.Infraestructure
 {
-    public interface IStreamProcessingService
-    {
-        Task ProcessStreamJob(string streamName);
-    }
 
-    public class StreamProcessingService : IStreamProcessingService
+    public class JobStreamProcessorService : IJobStreamProcessorService
     {
-        private readonly IDatabase _redisDb;
-        private readonly ILogger<StreamProcessingService> _logger;
-        private IAsyncPolicy _retryPolicy;
+        public readonly IDatabase _redisDb;
+        private readonly ILogger<JobStreamProcessorService> _logger;
+        public IAsyncPolicy _retryPolicy;
 
-        public StreamProcessingService(IConnectionMultiplexer redis, ILogger<StreamProcessingService> logger)
+        public JobStreamProcessorService(IConnectionMultiplexer redis, ILogger<JobStreamProcessorService> logger)
         {
             _redisDb = redis.GetDatabase();
             _logger = logger;
@@ -34,19 +31,15 @@ namespace DsAlpha.RedisStream.Infraestructure
                     });
         }
 
-        public Task ProcessStreamJob(string streamName)
+        public virtual Task ProcessStreamJob(string streamName)
         {
             var context = new Context();
             context["streamName"] = streamName;
 
             return _retryPolicy.ExecuteAsync(async (ctx) =>
             {
-                var streamEntries = await _redisDb.StreamReadAsync(streamName, "0-0", 2);
-                // Procesar los datos aquí...
-                // leer cada uno de los elementos de la lista ;
-                // eliminar del redisStream los elementos que se han leido satisfactoriamente
-
-
+                var length = await _redisDb.StreamLengthAsync(streamName);
+                var streamEntries = await _redisDb.StreamReadAsync(streamName, "0-0", (int)length);
                 _logger.LogInformation($"{DateTime.UtcNow} - Procesando stream {streamName} con {streamEntries.Length} entradas.");
             }, context);
         }
