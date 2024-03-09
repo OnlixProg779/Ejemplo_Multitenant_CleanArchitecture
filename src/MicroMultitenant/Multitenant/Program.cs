@@ -6,6 +6,7 @@ using Base.Application;
 using DsAlpha.RedisStream;
 using Hangfire;
 using Hangfire.Dashboard;
+using Multitenant.Infraestructure.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ builder.Services.ConfigureRedisServices(builder.Configuration);
 
 
 builder.Services.ConfigureHangfireClienteServices(builder.Configuration);
-builder.Services.ConfigureHangfireServerServices();
+builder.Services.ConfigureHangfireServerServices<InitOrganizationJob>();
 builder.Services.ConfigurePublishRedisHangfireServices();
 
 builder.Services.AddHttpContextAccessor();
